@@ -1,290 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>For You ❤️</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Taylor ❤️</title>
 
-  <style>
-    :root{
-      --pink:#ff4d6d;
-      --deep:#d6336c;
-      --bg:#ffeef2;
-      --ink:#2b2b2b;
-      --card:#ffffff;
-      --shadow: 0 10px 25px rgba(0,0,0,0.10);
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: Georgia, "Times New Roman", serif;
-      background: radial-gradient(circle at top, #fff7fa 0%, var(--bg) 45%, #ffdbe6 100%);
-      color:var(--ink);
-      text-align:center;
-      padding:28px 16px 60px;
-    }
-    h1{
-      margin: 10px 0 6px;
-      color:var(--deep);
-      font-size: 2.0rem;
-      letter-spacing: 0.2px;
-    }
-    .sub{
-      margin:0 0 18px;
-      opacity:0.85;
-      font-size: 1.02rem;
-    }
-    .card{
-      background: var(--card);
-      padding: 18px 16px;
-      border-radius: 16px;
-      box-shadow: var(--shadow);
-      max-width: 520px;
-      margin: 14px auto;
-      text-align:left;
-    }
-    .center { text-align:center; }
-    button{
-      background: var(--pink);
-      border: none;
-      color: white;
-      padding: 12px 16px;
-      border-radius: 12px;
-      font-size: 1.02rem;
-      cursor: pointer;
-      margin: 8px 6px;
-      box-shadow: 0 8px 18px rgba(255,77,109,0.25);
-      transition: transform .08s ease;
-    }
-    button:active{ transform: translateY(1px) scale(0.99); }
-    .small{
-      font-size: 0.92rem;
-      opacity:0.8;
-      margin-top: 8px;
-      text-align:center;
-    }
-    .hidden{
-      display:none;
-      margin-top: 12px;
-      line-height: 1.6;
-      font-size: 1.02rem;
-    }
-    .divider{
-      height:1px;
-      background: rgba(0,0,0,0.08);
-      margin: 14px 0;
-    }
-    .pillrow{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      justify-content:center;
-      margin-top: 10px;
-    }
-    .pill{
-      padding:8px 10px;
-      border-radius: 999px;
-      background: #fff0f5;
-      border: 1px solid rgba(214,51,108,0.18);
-      font-size: 0.95rem;
-    }
-    .heart{
-      position: fixed;
-      bottom: -20px;
-      font-size: 18px;
-      opacity: 0.85;
-      animation: floatUp linear forwards;
-      user-select:none;
-      pointer-events:none;
-    }
-    @keyframes floatUp{
-      from { transform: translateY(0) scale(0.95); opacity:0.9; }
-      to   { transform: translateY(-120vh) scale(1.35); opacity:0; }
-    }
-    .footer{
-      max-width:520px;
-      margin: 18px auto 0;
-      opacity:0.85;
-      font-size: 0.95rem;
-      text-align:center;
-    }
-    a{ color: var(--deep); text-decoration: none; }
-    a:hover{ text-decoration: underline; }
-    textarea{
-      width:100%;
-      min-height:90px;
-      border-radius: 12px;
-      border: 1px solid rgba(0,0,0,0.15);
-      padding: 10px 12px;
-      font-family: inherit;
-      font-size: 1rem;
-      outline:none;
-    }
-    .kbd{
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.92rem;
-      padding: 2px 6px;
-      border-radius: 8px;
-      background: #f6f6f6;
-      border: 1px solid rgba(0,0,0,0.1);
-    }
-  </style>
+<style>
+body {
+  font-family: Georgia, serif;
+  background: linear-gradient(#fff6fa, #ffe0ea);
+  text-align: center;
+  padding: 20px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  margin: 15px auto;
+  max-width: 520px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+button {
+  background: #ff4d6d;
+  border: none;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 10px;
+  margin: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.gallery img {
+  width: 100%;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.hidden { display:none; }
+
+.heart {
+  position:absolute;
+  font-size:22px;
+  cursor:pointer;
+}
+</style>
 </head>
 
 <body>
-  <h1>Hi my love ❤️</h1>
-  <p class="sub">A little Valentine’s page — just for you.</p>
 
-  <div class="card center">
-    <div class="pillrow">
-      <div class="pill">💌 love letters</div>
-      <div class="pill">✨ hidden messages</div>
-      <div class="pill">🗝️ surprises</div>
-      <div class="pill">❤️ always you</div>
-    </div>
-    <p class="small">Tap around. I hid a few things in here.</p>
-  </div>
+<h1>Taylor ❤️</h1>
+<p>A little page I made just for you.</p>
 
-  <div class="card">
-    <div class="center">
-      <button onclick="toggle('letter1')">Open Letter #1</button>
-      <button onclick="toggle('letter2')">Open Letter #2</button>
-      <button onclick="toggle('letter3')">Open Letter #3</button>
-    </div>
+<!-- LETTERS -->
+<div class="card">
+<button onclick="toggle('l1')">Letter 1</button>
+<button onclick="toggle('l2')">Letter 2</button>
+<button onclick="toggle('l3')">Letter 3</button>
 
-    <div id="letter1" class="hidden">
-      <div class="divider"></div>
-      <h2 style="margin:0 0 6px;color:#d6336c;">Letter #1</h2>
-      <p>
-        I love the way you make normal days feel like something I want to remember.
-        You’re my favorite person to talk to, laugh with, and be close to — always.
-      </p>
-      <p>
-        If you ever forget how loved you are, come back to this page and let it remind you.
-      </p>
-    </div>
+<div id="l1" class="hidden">Letter 1 (placeholder — coming soon 💌)</div>
+<div id="l2" class="hidden">Letter 2 (placeholder — coming soon 💌)</div>
+<div id="l3" class="hidden">Letter 3 (placeholder — coming soon 💌)</div>
+</div>
 
-    <div id="letter2" class="hidden">
-      <div class="divider"></div>
-      <h2 style="margin:0 0 6px;color:#d6336c;">Letter #2</h2>
-      <p>
-        I’m proud of you — for who you are, for how you love, and for everything you’re becoming.
-        I don’t just like you… I choose you.
-      </p>
-      <p>
-        And I’d choose you again in every version of life.
-      </p>
-    </div>
+<!-- HEART HUNT -->
+<div class="card">
+<h3>Find the 10 hidden hearts 💖</h3>
+<div id="hunt" style="position:relative;height:260px;"></div>
+<p id="count">0 / 10 found</p>
+</div>
 
-    <div id="letter3" class="hidden">
-      <div class="divider"></div>
-      <h2 style="margin:0 0 6px;color:#d6336c;">Letter #3</h2>
-      <p>
-        Here’s my promise: I’ll keep showing up. On the easy days and the hard days.
-        I’ll keep learning you, loving you, and protecting our little world.
-      </p>
-      <p>
-        Happy Valentine’s Day, baby. I’m really grateful you’re mine.
-      </p>
-    </div>
-  </div>
+<!-- MEMORY PHOTOS -->
+<div class="card">
+<h3>The night we first said I love you 📸</h3>
 
-  <div class="card center">
-    <button onclick="revealSecret()">Tap for a hidden message 🗝️</button>
-    <div id="secret" class="hidden"></div>
-    <p class="small">P.S. there’s another secret… type <span class="kbd">143</span> below 😉</p>
-  </div>
+<div class="gallery">
+<img src="IMG_5847.JPG" onclick="openPhoto(0)">
+<img src="IMG_5848.JPG" onclick="openPhoto(1)">
+<img src="IMG_5852.JPG" onclick="openPhoto(2)">
+</div>
 
-  <div class="card">
-    <h2 style="margin:0 0 10px;color:#d6336c;">Open When…</h2>
-    <div class="center">
-      <button onclick="openWhen('happy')">you’re happy 😊</button>
-      <button onclick="openWhen('stressed')">you’re stressed 🫶</button>
-      <button onclick="openWhen('miss')">you miss me 💭</button>
-    </div>
-    <div id="openwhen" class="hidden"></div>
-  </div>
+<p style="margin-top:10px;">One of my favorite memories with you ❤️</p>
+</div>
 
-  <div class="card">
-    <h2 style="margin:0 0 10px;color:#d6336c;">Secret code</h2>
-    <p style="margin:0 0 8px;opacity:.85">
-      Type the code and press unlock.
-    </p>
-    <textarea id="code" placeholder="hint: 143"></textarea>
-    <div class="center">
-      <button onclick="unlock()">Unlock</button>
-    </div>
-    <div id="unlocked" class="hidden"></div>
-  </div>
+<!-- POPUP MESSAGE -->
+<div id="popup" class="hidden card"></div>
 
-  <div class="footer">
-    Made with love. If you save this link, it’ll always be here. ❤️
-  </div>
+<script>
 
-  <script>
-    function toggle(id){
-      const el = document.getElementById(id);
-      el.style.display = (el.style.display === "block") ? "none" : "block";
-      burstHearts();
-    }
+function toggle(id){
+  let e=document.getElementById(id);
+  e.style.display=e.style.display==="block"?"none":"block";
+}
 
-    function burstHearts(){
-      // tiny heart animation
-      for(let i=0;i<10;i++){
-        const h = document.createElement("div");
-        h.className = "heart";
-        h.textContent = Math.random() > 0.5 ? "❤️" : "💗";
-        h.style.left = Math.random() * 100 + "vw";
-        h.style.animationDuration = (3 + Math.random()*2) + "s";
-        h.style.fontSize = (14 + Math.random()*16) + "px";
-        document.body.appendChild(h);
-        setTimeout(()=>h.remove(), 5200);
-      }
-    }
+const messages=[
+"You are my favorite person ❤️",
+"You make me feel safe and happy",
+"I love your smile",
+"You are my home",
+"I still get excited to see you",
+"I love doing life with you",
+"You are my favorite notification",
+"I love you more every day",
+"You make everything better",
+"I love you Taylor ❤️"
+];
 
-    function revealSecret(){
-      const secret = document.getElementById("secret");
-      const messages = [
-        "You’re my favorite notification. ❤️",
-        "If I could pause time, I’d pause it in your arms.",
-        "I like you more than I’m supposed to.",
-        "You + me = my safest place.",
-        "You’re the prettiest part of my life."
-      ];
-      const pick = messages[Math.floor(Math.random()*messages.length)];
-      secret.innerHTML = "<div class='divider'></div><p style='margin:0;'>" + pick + "</p>";
-      secret.style.display = "block";
-      burstHearts();
-    }
+let found=0;
 
-    function openWhen(type){
-      const box = document.getElementById("openwhen");
-      let msg = "";
-      if(type === "happy"){
-        msg = "I love seeing you happy. Take a second and soak it in — you deserve it. And I’m smiling thinking about you.";
-      } else if(type === "stressed"){
-        msg = "Breathe. Shoulders down. I’m proud of you and I’m here. Text me and I’ll help carry it with you.";
-      } else if(type === "miss"){
-        msg = "Come here: *hug*. I miss you too. Close your eyes and imagine me kissing your forehead — that’s real, I mean it.";
-      }
-      box.innerHTML = "<div class='divider'></div><p style='margin:0;line-height:1.6;'>" + msg + "</p>";
-      box.style.display = "block";
-      burstHearts();
-    }
+function createHearts(){
+  let box=document.getElementById("hunt");
+  box.innerHTML="";
+  for(let i=0;i<10;i++){
+    let h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="💗";
+    h.style.left=Math.random()*90+"%";
+    h.style.top=Math.random()*85+"%";
+    h.onclick=()=>reveal(h,i);
+    box.appendChild(h);
+  }
+}
 
-    function unlock(){
-      const val = (document.getElementById("code").value || "").trim();
-      const out = document.getElementById("unlocked");
-      if(val === "143"){
-        out.innerHTML = "<div class='divider'></div><p style='margin:0;line-height:1.7;'><strong>143 = I love you.</strong><br>And I really do. More than you know.</p>";
-        out.style.display = "block";
-        burstHearts();
-      } else {
-        out.innerHTML = "<div class='divider'></div><p style='margin:0;opacity:.9;'>Not quite 😅 Try again. (hint: 143)</p>";
-        out.style.display = "block";
-      }
-    }
-  </script>
+function reveal(h,i){
+  if(h.style.opacity==="0.3") return;
+  h.style.opacity="0.3";
+  found++;
+  document.getElementById("count").innerText=found+" / 10 found";
+  show(messages[i]);
+
+  if(found===10){
+    setTimeout(()=>show("You found them all 💘 — I love you Taylor, always."),500);
+  }
+}
+
+function show(text){
+  let p=document.getElementById("popup");
+  p.innerHTML=text;
+  p.style.display="block";
+}
+
+function openPhoto(i){
+  const texts=[
+  "The night we first said I love you ❤️",
+  "One of my favorite memories",
+  "I love this moment so much"
+  ];
+  show(texts[i]);
+}
+
+createHearts();
+
+</script>
+
 </body>
 </html>
 
