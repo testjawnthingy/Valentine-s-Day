@@ -386,9 +386,9 @@
   <div class="card center">
     <div class="pillrow">
       <div class="pill">🧩 maze secret</div>
-      <div class="pill">🎵 our song</div>
       <div class="pill">📸 tap memory</div>
       <div class="pill">💌 letters</div>
+      <div class="pill">🎡 spin</div>
       <div class="pill">❤️ big heartbeat</div>
     </div>
     <p class="small">Save this link. It’s yours forever.</p>
@@ -491,15 +491,15 @@
     </div>
   </div>
 
-  <!-- 5) Reasons I love you (10) -->
+  <!-- 5) Reasons I love you (10, no repeats) -->
   <div class="card">
     <h2 style="margin:0 0 8px;color:var(--deep);">5) Reasons I love you 💖</h2>
     <p style="margin:0;color:#444;opacity:.92;line-height:1.55;">
-      Tap for a reason.
+      Tap for a reason. (They won’t repeat.)
     </p>
 
     <div class="center">
-      <button onclick="nextReason()">Give me one</button>
+      <button id="reasonBtn" onclick="nextReason()">Give me one</button>
     </div>
 
     <div id="reasonOut" style="margin-top:10px; line-height:1.65; color:#444; text-align:center;">
@@ -507,11 +507,11 @@
     </div>
   </div>
 
-  <!-- 6) Spin wheel -->
+  <!-- 6) Spin wheel (no repeats) -->
   <div class="card">
     <h2 style="margin:0 0 8px;color:var(--deep);">6) Spin the wheel 🎡</h2>
     <p style="margin:0;color:#444;opacity:.92;line-height:1.55;">
-      Tap spin.
+      Tap spin. (Each result happens once.)
     </p>
 
     <div class="divider"></div>
@@ -522,7 +522,7 @@
     </div>
 
     <div class="center">
-      <button onclick="spin()">Spin</button>
+      <button id="spinBtn" onclick="spin()">Spin</button>
     </div>
 
     <div class="wheelNote" id="wheelNote">(waiting…)</div>
@@ -700,8 +700,8 @@
       burstHearts();
     }
 
-    // ===== Reasons (10) =====
-    const reasons = [
+    // ===== Reasons (no repeats) =====
+    let remainingReasons = [
       "You find me hilarious.",
       "You are there for me when I'm down.",
       "You are the sweetest person I've ever met.",
@@ -713,16 +713,26 @@
       "You love me.",
       "You are You, and I would never change a thing."
     ];
+
     function nextReason(){
-      const pick = reasons[Math.floor(Math.random()*reasons.length)];
+      if(remainingReasons.length === 0){
+        document.getElementById("reasonOut").textContent = "That’s all 10 💗 (but I could list a million more)";
+        document.getElementById("reasonBtn").disabled = true;
+        burstHearts();
+        return;
+      }
+      const idx = Math.floor(Math.random()*remainingReasons.length);
+      const pick = remainingReasons[idx];
+      remainingReasons.splice(idx, 1); // remove so it won't repeat
       document.getElementById("reasonOut").textContent = pick;
+
       markDone("reasons");
       burstHearts();
     }
 
-    // ===== Wheel (6 options) =====
+    // ===== Wheel (no repeats) =====
     const wheel = document.getElementById("wheel");
-    const wheelOptions = [
+    let remainingWheelOptions = [
       "I would love to hug you right now.",
       "I called the Perfect People Convention, they said they all knew you.",
       "You got something on your lips, oh wait its me.",
@@ -730,16 +740,28 @@
       "And the most beautiful teacher award goes to:",
       "Please God, let me have this one forever."
     ];
+
     let wheelRot = 0;
+
     function spin(){
+      if(remainingWheelOptions.length === 0){
+        document.getElementById("wheelNote").textContent = "You spun all of them 🎡💗";
+        document.getElementById("spinBtn").disabled = true;
+        burstHearts();
+        return;
+      }
+
+      // Spin animation (visual only)
       const spins = 3 + Math.random()*2;
       const extra = Math.random()*360;
       wheelRot += spins*360 + extra;
       wheel.style.transform = `rotate(${wheelRot}deg)`;
 
-      const angle = (360 - (wheelRot % 360)) % 360;
-      const idx = Math.floor(angle / (360 / wheelOptions.length));
-      const result = wheelOptions[idx] || "";
+      // Pick a non-repeating result
+      const idx = Math.floor(Math.random()*remainingWheelOptions.length);
+      const result = remainingWheelOptions[idx];
+      remainingWheelOptions.splice(idx, 1); // remove so it won't repeat
+
       document.getElementById("wheelNote").textContent = result;
 
       markDone("wheel");
@@ -790,7 +812,7 @@
       });
     });
 
-    // ===== MAZE (harder + clear start/end) =====
+    // ===== MAZE =====
     const canvas = document.getElementById("maze");
     const ctx = canvas.getContext("2d");
 
@@ -828,7 +850,6 @@
     function drawMaze(){
       ctx.clearRect(0,0,canvas.width,canvas.height);
 
-      // tiles
       for(let r=0;r<rows;r++){
         for(let c=0;c<cols;c++){
           let fill = (maze[r][c] === 1) ? getComputedStyle(document.documentElement).getPropertyValue('--wall') : getComputedStyle(document.documentElement).getPropertyValue('--path');
@@ -837,14 +858,12 @@
         }
       }
 
-      // start/end blocks
       ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--good');
       ctx.fillRect(startCell.c*cellSize, startCell.r*cellSize, cellSize, cellSize);
 
       ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--goal');
       ctx.fillRect(endCell.c*cellSize, endCell.r*cellSize, cellSize, cellSize);
 
-      // labels
       ctx.fillStyle = "rgba(30,30,30,0.70)";
       ctx.font = `${Math.floor(cellSize*0.32)}px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto`;
       ctx.textAlign = "center";
@@ -852,7 +871,6 @@
       ctx.fillText("START", (startCell.c+0.5)*cellSize, (startCell.r+0.5)*cellSize);
       ctx.fillText("END", (endCell.c+0.5)*cellSize, (endCell.r+0.5)*cellSize);
 
-      // subtle grid
       ctx.strokeStyle = "rgba(0,0,0,0.06)";
       for(let i=0;i<=cols;i++){
         ctx.beginPath(); ctx.moveTo(i*cellSize, 0); ctx.lineTo(i*cellSize, canvas.height); ctx.stroke();
@@ -861,7 +879,6 @@
         ctx.beginPath(); ctx.moveTo(0, i*cellSize); ctx.lineTo(canvas.width, i*cellSize); ctx.stroke();
       }
 
-      // player heart
       ctx.beginPath();
       ctx.fillStyle = "rgba(255,77,109,0.95)";
       ctx.arc(player.x, player.y, player.r, 0, Math.PI*2);
@@ -962,7 +979,6 @@
       dragging = false;
     }, {passive:false});
 
-    // desktop test
     canvas.addEventListener("mousedown", (e)=>{
       const p = canvasPosFromEvent(e);
       if(pointInPlayer(p.x,p.y)) dragging = true;
@@ -988,3 +1004,4 @@
   </script>
 </body>
 </html>
+
