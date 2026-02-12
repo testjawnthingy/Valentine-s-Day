@@ -188,7 +188,15 @@
       border-radius: 12px;
       background: #fff;
       border: 1px solid rgba(0,0,0,0.08);
-      touch-action: none; /* critical for iPhone drag */
+      touch-action: none;
+    }
+
+    /* Spotify */
+    iframe{
+      border-radius:14px;
+      border:1px solid rgba(0,0,0,0.08);
+      width:100%;
+      height:152px;
     }
 
     /* Memory */
@@ -231,46 +239,10 @@
       padding: 4px 8px;
       border-radius:999px;
     }
-
-    /* Modal */
-    .modal{
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.55);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding: 18px;
-      z-index: 9998;
-    }
-    .polaroid{
-      width: min(92vw, 560px);
-      background:#fff;
-      border-radius: 18px;
-      box-shadow: var(--shadow2);
-      overflow:hidden;
-      border: 1px solid rgba(255,255,255,0.15);
-    }
-    .polaroid img{
-      width:100%;
-      height:auto;
-      display:block;
-    }
-    .polaroidBottom{
-      padding: 12px 14px 16px;
-    }
-    .captionTitle{
-      color:var(--deep);
-      font-weight:700;
-      margin: 0 0 6px;
-      font-size: 1.05rem;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-    }
-    .captionText{
-      margin:0;
+    .memoryCaption{
+      margin-top: 12px;
+      line-height: 1.65;
       color:#444;
-      opacity:0.95;
-      line-height:1.45;
     }
 
     /* Love meter */
@@ -286,7 +258,7 @@
     /* Envelopes */
     .envGrid{
       display:grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap:10px;
       margin-top:10px;
     }
@@ -360,11 +332,11 @@
       margin-top: 12px;
     }
     .bigHeart{
-      width: 130px;
-      height: 130px;
+      width: 140px;
+      height: 140px;
       display:grid;
       place-items:center;
-      border-radius: 28px;
+      border-radius: 30px;
       background: #fff0f5;
       border: 1px solid rgba(214,51,108,0.22);
       box-shadow: 0 12px 22px rgba(0,0,0,0.08);
@@ -373,7 +345,7 @@
       -webkit-tap-highlight-color: transparent;
     }
     .bigHeart span{
-      font-size: 72px;
+      font-size: 78px;
       transform: translateY(2px);
       filter: drop-shadow(0 10px 18px rgba(255,77,109,0.18));
     }
@@ -382,7 +354,7 @@
     }
     @keyframes pulse{
       0%   { transform: scale(1); }
-      50%  { transform: scale(1.10); }
+      50%  { transform: scale(1.11); }
       100% { transform: scale(1); }
     }
     .hintText{
@@ -404,17 +376,6 @@
       color:var(--muted);
       font-size:0.92rem;
     }
-
-    /* Spotify player (revealed after maze) */
-    .spotifyWrap{
-      margin-top: 10px;
-    }
-    iframe{
-      border-radius:14px;
-      border:1px solid rgba(0,0,0,0.08);
-      width:100%;
-      height:152px;
-    }
   </style>
 </head>
 
@@ -425,9 +386,9 @@
   <div class="card center">
     <div class="pillrow">
       <div class="pill">🧩 maze secret</div>
-      <div class="pill">📸 tap memories</div>
+      <div class="pill">🎵 our song</div>
+      <div class="pill">📸 tap memory</div>
       <div class="pill">💌 letters</div>
-      <div class="pill">🎡 spin</div>
       <div class="pill">❤️ big heartbeat</div>
     </div>
     <p class="small">Save this link. It’s yours forever.</p>
@@ -437,7 +398,7 @@
   <div class="card">
     <h2 style="margin:0 0 8px;color:var(--deep);">1) The Love Maze 🧩</h2>
     <p style="margin:0;color:#444;opacity:.92;line-height:1.55;">
-      Drag the heart from <strong>START</strong> to <strong>END</strong>. When you reach the end, you’ll unlock a secret message (and the song).
+      Drag the heart from <strong>START</strong> to <strong>END</strong>.
     </p>
 
     <div class="mazeWrap">
@@ -448,33 +409,23 @@
       <button class="secondary" onclick="resetMaze()">Reset maze</button>
     </div>
 
-    <div id="mazeWin" class="hidden" style="margin-top:10px; line-height:1.6; color:#444;">
+    <div id="mazeWin" class="hidden" style="margin-top:10px; line-height:1.7; color:#444;">
       <div class="divider"></div>
-      <strong style="color:var(--deep);">Maze complete 💘</strong>
-      <p style="margin:8px 0 0;">
-        (placeholder secret message — you’ll give me this later)
-      </p>
-    </div>
-
-    <!-- Spotify appears only AFTER maze is complete -->
-    <div id="spotifySection" class="hidden">
-      <div class="divider"></div>
-      <strong style="color:var(--deep);">Now play our song 🎵</strong>
-      <p style="margin:8px 0 10px;color:#444;opacity:.92;line-height:1.55;">
-        iPhone won’t let websites force Spotify autoplay — but once you tap play one time, it can keep going while you do everything else.
+      <strong style="color:var(--deep);">Wow you made it to the end!</strong>
+      <p style="margin:10px 0 0;">
+        This is how easy it felt for me to fall in love with you. The beautiful smile, the intoxicating laughter, eyes so dreamy I can't look away.
       </p>
 
-      <!-- IMPORTANT: Paste the Spotify TRACK link here once you have it.
-           Example: https://open.spotify.com/track/XXXXXXXXXXXX -->
-      <div class="spotifyWrap">
-        <iframe
-          id="spotifyPlayer"
-          src=""
-          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-          loading="lazy">
-        </iframe>
-      </div>
-      <p class="small">(placeholder — I’ll wire the exact Olivia Dean track once you paste the Spotify link)</p>
+      <div class="divider"></div>
+
+      <iframe
+        id="spotifyPlayer"
+        src=""
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy">
+      </iframe>
+
+      <p class="small">Tap play once — it can keep going while you do everything else 💗</p>
     </div>
   </div>
 
@@ -482,7 +433,7 @@
   <div class="card">
     <h2 style="margin:0 0 8px;color:var(--deep);">2) Tap to Reveal A Memory 📸</h2>
     <p style="margin:0;color:#444;opacity:.92;line-height:1.55;">
-      Tap a photo once to unblur it. Tap again to view it bigger.
+      Tap a photo once to unblur it. (The caption will appear below.)
     </p>
 
     <div class="divider"></div>
@@ -493,14 +444,16 @@
       <div class="thumb" data-i="2"><img src="IMG_5852.JPG" alt="Memory 3"></div>
     </div>
 
-    <p class="small">(placeholders — we’ll add captions later)</p>
+    <div id="memoryCaption" class="hidden memoryCaption">
+      The night we first said "I love you." Ugh, such a fantastic night. You looked so pretty. We danced. We laughed. The ball dropped. We kissed. You get the gist. Wouldn't have wanted to start the new year off any different. I love you Taylor.
+    </div>
   </div>
 
   <!-- 3) Love meter -->
   <div class="card">
     <h2 style="margin:0 0 8px;color:var(--deep);">3) Love meter ❤️</h2>
     <p style="margin:0;color:#444;opacity:.92;line-height:1.55;">
-      Slide it all the way. (There’s a surprise at the end.)
+      Slide it all the way to infinity.
     </p>
 
     <div class="divider"></div>
@@ -510,38 +463,39 @@
       <span>0</span><span>50</span><span>100</span><span>∞</span>
     </div>
 
-    <div id="meterMsg" class="hidden" style="margin-top:10px; line-height:1.6; color:#444;">
+    <div id="meterMsg" class="hidden" style="margin-top:10px; line-height:1.7; color:#444;">
       <div class="divider"></div>
-      <strong style="color:var(--deep);">Unlocked 💗</strong>
-      <p style="margin:8px 0 0;">(placeholder love-meter message)</p>
+      <strong style="color:var(--deep);">My love for you has no limits.</strong>
+      <p style="margin:10px 0 0;">
+        I love you at your worst, at my worst, at our best. You are indescribable!
+      </p>
     </div>
   </div>
 
-  <!-- 4) Love letters -->
+  <!-- 4) Love letters (2) -->
   <div class="card">
     <h2 style="margin:0 0 8px;color:var(--deep);">4) Love letters 💌</h2>
     <p style="margin:0;color:#444;opacity:.92;line-height:1.55;">
-      Tap an envelope to open a letter. (Placeholders for now.)
+      Tap an envelope.
     </p>
 
     <div class="envGrid">
       <div class="env" onclick="openLetter(1)"><div class="icon">💌</div><div class="lbl">Letter 1</div></div>
       <div class="env" onclick="openLetter(2)"><div class="icon">💌</div><div class="lbl">Letter 2</div></div>
-      <div class="env" onclick="openLetter(3)"><div class="icon">💌</div><div class="lbl">Letter 3</div></div>
     </div>
 
-    <div id="letterOut" class="hidden" style="margin-top:10px; line-height:1.65; color:#444;">
+    <div id="letterOut" class="hidden" style="margin-top:10px; line-height:1.75; color:#444;">
       <div class="divider"></div>
       <strong id="letterTitle" style="color:var(--deep);">Letter</strong>
-      <p id="letterBody" style="margin:8px 0 0;">(placeholder letter text)</p>
+      <p id="letterBody" style="margin:10px 0 0;"></p>
     </div>
   </div>
 
-  <!-- 5) Reasons generator -->
+  <!-- 5) Reasons I love you (10) -->
   <div class="card">
     <h2 style="margin:0 0 8px;color:var(--deep);">5) Reasons I love you 💖</h2>
     <p style="margin:0;color:#444;opacity:.92;line-height:1.55;">
-      Tap for a reason. (We’ll load your real reasons later.)
+      Tap for a reason.
     </p>
 
     <div class="center">
@@ -549,7 +503,7 @@
     </div>
 
     <div id="reasonOut" style="margin-top:10px; line-height:1.65; color:#444; text-align:center;">
-      (placeholder reason)
+      (tap the button 💗)
     </div>
   </div>
 
@@ -557,7 +511,7 @@
   <div class="card">
     <h2 style="margin:0 0 8px;color:var(--deep);">6) Spin the wheel 🎡</h2>
     <p style="margin:0;color:#444;opacity:.92;line-height:1.55;">
-      Tap spin. It lands on something cute. (We’ll customize the options later.)
+      Tap spin.
     </p>
 
     <div class="divider"></div>
@@ -571,14 +525,14 @@
       <button onclick="spin()">Spin</button>
     </div>
 
-    <div class="wheelNote" id="wheelNote">(placeholder result)</div>
+    <div class="wheelNote" id="wheelNote">(waiting…)</div>
   </div>
 
-  <!-- 7) Big Heartbeat -->
+  <!-- 7) Heartbeat -->
   <div class="card">
     <h2 style="margin:0 0 8px;color:var(--deep);">7) Heartbeat ❤️</h2>
     <p style="margin:0;color:#444;opacity:.92;line-height:1.55;">
-      Press and hold the big heart for a moment.
+      Press and hold the big heart.
     </p>
 
     <div class="bigHeartWrap" id="hbWrap">
@@ -590,7 +544,7 @@
 
     <div id="holdOut" class="hidden" style="margin-top:10px; line-height:1.6; color:#444; text-align:center;">
       <div class="divider"></div>
-      (placeholder heartbeat message)
+      <strong style="color:var(--deep);">My heart beats for you only.</strong>
     </div>
   </div>
 
@@ -610,10 +564,12 @@
       <button id="finalBtn" class="secondary" disabled onclick="openFinal()">Locked</button>
     </div>
 
-    <div id="finalOut" class="hidden" style="margin-top:10px; line-height:1.65; color:#444;">
+    <div id="finalOut" class="hidden" style="margin-top:10px; line-height:1.75; color:#444;">
       <div class="divider"></div>
-      <strong style="color:var(--deep);">For Taylor 💗</strong>
-      <p style="margin:8px 0 0;">(placeholder final message — you’ll give me this later)</p>
+      <strong style="color:var(--deep);">Happy Valentine's Day Taylor! :)))))))</strong>
+      <p style="margin:10px 0 0;">
+        You are the absolute light of my life. I am so grateful for every memory we have shared, and all the ones we have yet to make. God has blessed me dearly by putting you in my life. I hope your day is as magical as you. I love you so much.
+      </p>
     </div>
   </div>
 
@@ -624,20 +580,6 @@
       <button class="toastClose" onclick="closeToast()">✕</button>
     </div>
     <div class="toastBody" id="toastBody"></div>
-  </div>
-
-  <!-- Modal -->
-  <div class="modal" id="modal" onclick="closeModalIfBackdrop(event)">
-    <div class="polaroid">
-      <div style="display:flex;justify-content:flex-end;padding:10px 10px 0;">
-        <button class="secondary" onclick="closeModal()">Close</button>
-      </div>
-      <img id="modalImg" src="" alt="Memory large">
-      <div class="polaroidBottom">
-        <div class="captionTitle" id="capTitle">Memory</div>
-        <p class="captionText" id="capText">(placeholder caption)</p>
-      </div>
-    </div>
   </div>
 
   <script>
@@ -675,7 +617,7 @@
     }
     function closeToast(){ document.getElementById("toast").style.display = "none"; }
 
-    // ===== progress unlock system (FINAL after 5 interactions) =====
+    // ===== progress unlock (final after 5 interactions) =====
     const progressFlags = {
       maze: false,
       memory: false,
@@ -710,8 +652,28 @@
 
     function openFinal(){
       document.getElementById("finalOut").style.display = "block";
-      showToast("Final surprise 🌙", "Unlocked. (placeholder — we’ll fill the real message later)");
       burstHearts();
+    }
+
+    // ===== Spotify embed =====
+    const SPOTIFY_TRACK_LINK = "https://open.spotify.com/track/6sGIMrtIzQjdzNndVxe397?si=28d9c50f72cb4432";
+
+    function toSpotifyEmbed(link){
+      let id = "";
+      if(link.includes("open.spotify.com/track/")){
+        id = link.split("open.spotify.com/track/")[1].split("?")[0].split("/")[0];
+      } else if(link.startsWith("spotify:track:")){
+        id = link.split("spotify:track:")[1];
+      } else if(link.includes("/embed/track/")){
+        return link;
+      }
+      if(!id) return "";
+      return `https://open.spotify.com/embed/track/${id}`;
+    }
+
+    function setSpotify(){
+      const embed = toSpotifyEmbed(SPOTIFY_TRACK_LINK);
+      document.getElementById("spotifyPlayer").src = embed || "";
     }
 
     // ===== Love meter =====
@@ -719,47 +681,54 @@
     meter.addEventListener("input", () => {
       if(Number(meter.value) >= 110){
         document.getElementById("meterMsg").style.display = "block";
-        showToast("Love meter ❤️", "(placeholder) You hit ∞.");
         markDone("meter");
         burstHearts();
       }
     });
 
     // ===== Letters =====
+    const letters = {
+      1: `The day I first met you was the best day of my life. Then the next day I saw you was. Then the next, then the next. Being with you is the closest thing I’ll ever have to heaven on earth. The feeling I get being around you is like a kid hearing the ice cream truck. So wholesome, so lovingly innocent, so perfect. I love being with you and hope I always will be.`,
+      2: `One of the first times I knew I would love you deeply is when you met my family. When you first came over that one day after church it all felt so right. I knew this was the last girl I wanted my parents to ever meet. You are so incredibly kind and I just love how you interact with them all. From the teacher conversations with my mom to giving it right back to Matthew, you fit so well. We all truly love you and hope you will always be apart of our family. Of course, it also just felt perfect meeting yours as well. Your parents did a wonderful job making me feel welcome right off the bat, and wow they are just such great people. I have very much enjoyed getting to know all of them and I promise I will never let them or their wonderful daughter down.`
+    };
+
     function openLetter(n){
       document.getElementById("letterTitle").textContent = `Letter ${n}`;
-      document.getElementById("letterBody").textContent = "(placeholder letter text — coming soon)";
+      document.getElementById("letterBody").textContent = letters[n] || "";
       document.getElementById("letterOut").style.display = "block";
-      showToast("Love letter 💌", "(placeholder) Letter opened.");
       markDone("letters");
       burstHearts();
     }
 
-    // ===== Reasons generator =====
+    // ===== Reasons (10) =====
     const reasons = [
-      "(placeholder reason 1)",
-      "(placeholder reason 2)",
-      "(placeholder reason 3)",
-      "(placeholder reason 4)",
-      "(placeholder reason 5)"
+      "You find me hilarious.",
+      "You are there for me when I'm down.",
+      "You are the sweetest person I've ever met.",
+      "You will be a fantastic mother.",
+      "You want the best for me.",
+      "You give the best hugs.",
+      "You have the softest hands ever.",
+      "🍑",
+      "You love me.",
+      "You are You, and I would never change a thing."
     ];
     function nextReason(){
       const pick = reasons[Math.floor(Math.random()*reasons.length)];
       document.getElementById("reasonOut").textContent = pick;
-      showToast("Reason 💖", "(placeholder) Tap again for another.");
       markDone("reasons");
       burstHearts();
     }
 
-    // ===== Wheel =====
+    // ===== Wheel (6 options) =====
     const wheel = document.getElementById("wheel");
     const wheelOptions = [
-      "(placeholder option 1)",
-      "(placeholder option 2)",
-      "(placeholder option 3)",
-      "(placeholder option 4)",
-      "(placeholder option 5)",
-      "(placeholder option 6)"
+      "I would love to hug you right now.",
+      "I called the Perfect People Convention, they said they all knew you.",
+      "You got something on your lips, oh wait its me.",
+      "You are the Pam to my Jim.",
+      "And the most beautiful teacher award goes to:",
+      "Please God, let me have this one forever."
     ];
     let wheelRot = 0;
     function spin(){
@@ -770,10 +739,9 @@
 
       const angle = (360 - (wheelRot % 360)) % 360;
       const idx = Math.floor(angle / (360 / wheelOptions.length));
-      const result = wheelOptions[idx] || "(placeholder)";
+      const result = wheelOptions[idx] || "";
       document.getElementById("wheelNote").textContent = result;
 
-      showToast("Wheel 🎡", "It landed on: " + result);
       markDone("wheel");
       burstHearts();
     }
@@ -790,7 +758,6 @@
       holdTimer = setTimeout(() => {
         revealed = true;
         document.getElementById("holdOut").style.display = "block";
-        showToast("Heartbeat ❤️", "(placeholder) Message revealed.");
         markDone("heartbeat");
         burstHearts();
       }, 1400);
@@ -807,76 +774,26 @@
     bigHeart.addEventListener("mouseup", endHold);
     bigHeart.addEventListener("mouseleave", endHold);
 
-    // ===== Memory reveal + modal =====
-    const memoryPhotos = [
-      { src: "IMG_5847.JPG", title: "That night 💛", text: "(placeholder caption)" },
-      { src: "IMG_5848.JPG", title: "My favorite", text: "(placeholder caption)" },
-      { src: "IMG_5852.JPG", title: "Us 🫶", text: "(placeholder caption)" }
-    ];
-
+    // ===== Memory reveal + single caption at bottom =====
+    let memoryCaptionShown = false;
     document.querySelectorAll("#gallery .thumb").forEach((thumb) => {
       thumb.addEventListener("click", () => {
-        const i = Number(thumb.dataset.i);
         if(!thumb.classList.contains("revealed")){
           thumb.classList.add("revealed");
-          showToast("Memory 📸", "(placeholder) Tap again to view bigger.");
+        }
+        if(!memoryCaptionShown){
+          document.getElementById("memoryCaption").style.display = "block";
+          memoryCaptionShown = true;
           markDone("memory");
           burstHearts();
-        } else {
-          openModal(i);
         }
       });
     });
-
-    function openModal(i){
-      const m = document.getElementById("modal");
-      document.getElementById("modalImg").src = memoryPhotos[i].src;
-      document.getElementById("capTitle").textContent = memoryPhotos[i].title;
-      document.getElementById("capText").textContent  = memoryPhotos[i].text;
-      m.style.display = "flex";
-      burstHearts();
-    }
-    function closeModal(){ document.getElementById("modal").style.display = "none"; }
-    function closeModalIfBackdrop(e){ if(e.target.id === "modal") closeModal(); }
-
-    // ===== Spotify embed (revealed AFTER maze) =====
-    // Paste your Spotify track link here when you have it:
-    // Example: const SPOTIFY_TRACK_LINK = "https://open.spotify.com/track/XXXXXXXX";
-    const SPOTIFY_TRACK_LINK = "https://open.spotify.com/track/6sGIMrtIzQjdzNndVxe397?si=28d9c50f72cb4432";
-
-    function toSpotifyEmbed(link){
-      let id = "";
-      if(link.includes("open.spotify.com/track/")){
-        id = link.split("open.spotify.com/track/")[1].split("?")[0].split("/")[0];
-      } else if(link.startsWith("spotify:track:")){
-        id = link.split("spotify:track:")[1];
-      } else if(link.includes("/embed/track/")){
-        return link;
-      }
-      if(!id) return "";
-      return `https://open.spotify.com/embed/track/${id}`;
-    }
-
-    function revealSpotify(){
-      const sec = document.getElementById("spotifySection");
-      const iframe = document.getElementById("spotifyPlayer");
-      const embed = toSpotifyEmbed(SPOTIFY_TRACK_LINK);
-
-      sec.style.display = "block";
-
-      if(embed){
-        iframe.src = embed;
-      } else {
-        // still show section but without a valid src
-        iframe.src = "";
-      }
-    }
 
     // ===== MAZE (harder + clear start/end) =====
     const canvas = document.getElementById("maze");
     const ctx = canvas.getContext("2d");
 
-    // Harder maze: bigger grid and narrower routes
     // 0 = path, 1 = wall
     const maze = [
       [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
@@ -899,7 +816,6 @@
     const rows = maze.length;
     const cols = maze[0].length;
 
-    // Clear start/end positions
     const startCell = { r:1, c:1 };
     const endCell   = { r:13, c:13 };
 
@@ -1002,13 +918,9 @@
       if(r === endCell.r && c === endCell.c){
         won = true;
         document.getElementById("mazeWin").style.display = "block";
-        showToast("Maze 💘", "You made it. Song unlocked.");
+        setSpotify();
         markDone("maze");
         burstHearts();
-
-        // reveal spotify
-        revealSpotify();
-        document.getElementById("spotifySection").scrollIntoView({behavior:"smooth", block:"start"});
       }
 
       drawMaze();
@@ -1050,7 +962,7 @@
       dragging = false;
     }, {passive:false});
 
-    // mouse (desktop)
+    // desktop test
     canvas.addEventListener("mousedown", (e)=>{
       const p = canvasPosFromEvent(e);
       if(pointInPlayer(p.x,p.y)) dragging = true;
@@ -1067,9 +979,7 @@
       dragging = false;
       player = { x: (startCell.c + 0.5)*cellSize, y: (startCell.r + 0.5)*cellSize, r: cellSize*0.22 };
       document.getElementById("mazeWin").style.display = "none";
-      // keep spotify visible if already revealed (your call). I’m leaving it visible once earned.
       drawMaze();
-      showToast("Maze reset", "Go again 😉");
     }
 
     // ===== init =====
@@ -1078,4 +988,3 @@
   </script>
 </body>
 </html>
-
